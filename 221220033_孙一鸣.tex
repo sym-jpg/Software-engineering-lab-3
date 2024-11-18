@@ -1,0 +1,219 @@
+\documentclass[UTF8]{ctexart}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{authblk}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{makecell}
+\usepackage{subfigure}
+\usepackage{float}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{xcolor}
+\lstset{
+    numbers=left, 
+    numberstyle= \tiny, 
+    keywordstyle= \color{ blue!70},
+    basicstyle=\footnotesize,
+    commentstyle= \color{red!50!green!50!blue!50}, 
+    frame=shadowbox, % 阴影效果
+    rulesepcolor= \color{ red!20!green!20!blue!20} ,
+    escapeinside=``, % 英文分号中可写入中文
+    %basicstyle=\script,
+    xleftmargin=2em,xrightmargin=0em, aboveskip=1em,
+    framexleftmargin=2em
+} 
+
+
+\begin{document}
+
+\begin{titlepage}
+        \heiti
+        \vspace*{64pt}
+        \begin{center}
+           
+            \fontsize{24pt}{24pt} {天气应用设计与建模实验报告} \\
+	\vspace*{24pt}   
+            \vspace*{48pt}
+            \vspace*{48pt}
+        
+            \vspace*{72pt}
+        
+	   \Large  姓名：\ \ \underline{\makebox[216pt]{孙一鸣 }}
+
+	   \Large  学号：\ \ \underline{\makebox[216pt]{221220033}}
+
+	\vspace*{48pt}
+	 \Large 日期:\ \ \underline{\makebox[216pt]{2024年10月11日}}
+
+        \end{center}
+    \end{titlepage}
+\newpage
+
+\section{软件整体架构}
+
+根据该软件的功能需求，将软件大致划分为以下模块：
+
+\begin{center}
+\begin{tabular}{| c| c|  }
+\hline
+模块 & 功能  \\ 
+\hline\hline
+ Weather Module & 处理当前天气、湿度、多城市天气查询等 \\  
+\hline 
+Forecast Module & 处理2小时内的天气预测功能 \\
+\hline
+Air Quality Module & 处理空气质量和健康建议功能  \\
+\hline
+Alert Module & 处理实时天气警报和极端天气通知 \\
+\hline
+Customization Module & 处理用户的主题、布局自定义设置及个性化通知\\
+\hline
+Travel Mode Module &  提供旅行路径天气预测和建议\\
+\hline
+Widget Module & 实现主屏幕的小部件功能\\
+\hline
+User Module & 管理用户的个人信息及偏好设置\\
+\hline
+Notification Module & 处理短信警告和其他通知机制 \\
+\hline
+\end{tabular}
+\end{center}
+
+根据这一架构，绘制该软件的类图：
+
+ \subsection{ 类图}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[scale=0.2]{lei}
+\caption{类图}
+\label{figure}
+\end{figure}
+
+在这一类图中，weather是核心模块，负责与forecast, airquality, alert, travelmode模块交互，并调用这些模块来实现对应功能；forecast模块负责2小时内的天气预测；airquality模块负责处理空气质量和健康建议；alert模块负责极端天气预警；travelmode模块负责旅行模式，提供沿途天气和出行建议。
+
+在此之外，customization模块负责个性化设置，包括主题、布局、通知设置等，并与user模块交互；user模块，alert模块共同与notification模块交互，从而使用户可以接受到极端天气警告。widget模块与customzation模块交互，允许用户自定义桌面天气组件。
+
+\subsection{组件图}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[scale=0.2]{zu}
+\caption{组件图}
+\label{figure}
+\end{figure}
+
+在该图中，WeatherService是核心组件，负责天气相关信息的数据获取和处理；UserService负责与用户相关的个性化服务和小工具设置；AlertService处理极端天气警报，并通过NotificationService象用户发送通知；各组件均与用户界面（UI）紧密交互，以提供实时更新和数据展示。
+
+\subsection{活动图}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[scale=0.2]{huo}
+\caption{活动图}
+\label{figure}
+\end{figure}
+
+在这一活动图中，用户打开APP开始使用后，选择城市或者使用定位功能获取位置信息；之后APP向后台服务请求天气数据；系统检查用户是否登录，如果已登录，加载用户的个性化设置；否则使用默认设置。APP调用 WeatherService，从不同的模块获取天气、湿度、空气质量、未来天气预测等信息；并且检查是否有极端天气，如果有则触发 AlertModule，发送通知警报；如果没有，则跳过此步骤。系统将各个模块获取的数据整合，并应用用户的主题和布局设置；最后，将整合后的天气信息呈现给用户，结束流程。
+
+\subsection{通信图}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[scale=0.2]{tong}
+\caption{通信图}
+\label{figure}
+\end{figure}
+
+该通信图展示了各个模块在用户查询天气时的交互过程，用户通过 UI 触发各服务模块，获取天气、预测、空气质量及警报信息。CustomizationModule 和 NotificationModule 用于个性化显示和通知功能。
+\newpage
+
+\section{UI界面}
+
+\begin{figure}[htbp]
+\subfigure[UI1]{
+\begin{minipage}{6cm}
+\centering
+\includegraphics[scale=0.5]{UI1}
+\end{minipage}
+}
+\subfigure[UI2]{
+\centering
+\begin{minipage}{6cm}
+\centering
+\includegraphics[scale=0.5]{UI2}
+\end{minipage}
+}
+\end{figure}
+
+UI1是该天气APP的主界面，在这个界面上实现了Weather Module和Forecast Module 的内容，可以看到当前的天气情况，温度，湿度，以及未来数小时内的天气、温度状况，并使用折线图给出直观的展示。另外在这一界面还可以看到当前城市信息。
+
+
+点击主界面的城市按钮，可以来到城市选择(UI2)界面，可以在搜索框直接输入城市名，或者在下方通过城市名首字母检索。
+
+\newpage
+\begin{figure}[htbp]
+\subfigure[UI3]{
+\begin{minipage}{6cm}
+\centering
+\includegraphics[scale=0.5]{UI3}
+\end{minipage}
+}
+\subfigure[UI4]{
+\centering
+\begin{minipage}{6cm}
+\centering
+\includegraphics[scale=0.5]{UI4}
+\end{minipage}
+}
+\end{figure}
+
+UI3界面是空气质量界面，实现了Airquality Module，可以查看当前空气质量整体状况和健康建议；并附有污染物的详细信息。
+
+极端天气预警界面实现了Alert Module，可以显示即将到来的极端天气及到来时间。
+\newpage
+\begin{figure}[htbp]
+\subfigure[UI5]{
+\begin{minipage}{6cm}
+\centering
+\includegraphics[scale=0.5]{UI5}
+\end{minipage}
+}
+\subfigure[UI6]{
+\centering
+\begin{minipage}{6cm}
+\centering
+\includegraphics[scale=0.5]{UI6}
+\end{minipage}
+}
+\end{figure}
+
+用户界面实现了UserModule和 Customzation Module，用户可以在这一界面自定义APP的颜色，布局，以及背景图片；还可以管理通知方式。
+
+UI6界面是Travelmode Module界面，用户可以输入旅行起点与终点，APP会自动设计最佳路径，并显示沿途城市的天气状况，提供出行建议。
+\newpage
+\begin{figure}[htbp]
+\centering
+\includegraphics[scale=0.5]{UI7}
+\caption{UI7}
+\label{figure}
+\end{figure}
+
+UI7界面是用户手机桌面的小组件，实现Widget Module，用户可以便捷地在桌面直接看到天气的大致信息。
+
+\section{大模型使用情况}
+
+在绘制UML图时，我让Chatgpt分别给出了类图、组件图、活动图、通信图的示例代码，并在其基础上实现了基于实验一需求的UML图绘制。
+\begin{figure}[htbp]
+\centering
+\includegraphics[scale=0.5]{chat}
+\caption{Chat with chatgpt}
+\label{figure}
+\end{figure}
+
+我根据gpt给出的示例代码了解了这4种UML图的绘制方式，结合需求后自行绘制了前文提过的UML图。
+
+
+
+\end{document}
