@@ -1,11 +1,10 @@
 """weather module"""
 import requests
 import alert_module as a_m
-class WeatherMod:
+class weather_module:
     def __init__(self,key,base):
         self.api_key = key #"81b502387a57509a24643d6dfc9affb5"
         self.base_url = base #"http://api.openweathermap.org/data/2.5/weather?"
-
 
     def get_current_weather(self,city):
         complete_url = f"{self.base_url}q={city}&appid={self.api_key}&units=metric"
@@ -64,5 +63,5 @@ class WeatherMod:
         # 获取降雨量和风速
         rain = data.get("rain", {}).get("1h", 0)  # 最近1小时降雨量，默认为0
         wind_speed = data.get("wind", {}).get("speed", 0)  # 风速
-        alert = a_m.Alert_module()
+        alert = a_m.alert_module()
         return alert.send_extreme_weather_alert(temp,wind_speed,rain)

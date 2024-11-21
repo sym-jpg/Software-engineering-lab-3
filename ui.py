@@ -79,7 +79,7 @@ def show_weather(city):
     if city:
         key="81b502387a57509a24643d6dfc9affb5"
         base="http://api.openweathermap.org/data/2.5/weather?"
-        weather_module=w_m.Weather_module(key,base)
+        weather_module=w_m.weather_module(key,base)
         temp,wea_des = weather_module.get_current_weather(city)
         humi=weather_module.get_humidity(city)
         alert=weather_module.get_alert(city,temp)
@@ -102,7 +102,7 @@ def plot_forecast(city):
     """plot forecast"""
     key="81b502387a57509a24643d6dfc9affb5"
     base="http://api.openweathermap.org/data/2.5/forecast?"
-    forecast_module=f_m.Forecast_module(key,base)
+    forecast_module=f_m.forecast_module(key,base)
     hours, temperatures, humidities = forecast_module.get_forecast(city)
     if hours and temperatures and humidities:
         # 创建一个 Figure 对象
@@ -226,7 +226,7 @@ def travel():
     def travel_plan():
         ori=o_entry.get()
         end=e_entry.get()
-        travel_m=t_m.Travel_module()
+        travel_m=t_m.travel_module()
         advice=travel_m.get_travel_advice(ori,end)
         ad_label=ttk.Label(travel_window,font=("Arial", 14),text="\n".join(advice))
         ad_label.place(relx=0.3,rely=0.6)
@@ -256,7 +256,7 @@ def travel():
 root = tk.Tk()
 root.title("Weather App")
 root.geometry("550x500")
-usr=u_m.User_module()
+usr=u_m.user_module()
 root.resizable(0,0)
 
 ENABLE_ALERT=False
@@ -271,7 +271,7 @@ canvas.pack(fill="both", expand=True)
 # 将背景图片添加到 Canvas
 bg_image_item = canvas.create_image(0, 0, image=initial_photo, anchor="nw")
 canvas.image = initial_photo
-cus=c_m.Customization_module(usr)
+cus=c_m.customization_module(usr)
 process_log_in(usr,root)
 switch_color = tk.BooleanVar(value=False)
 style = ttk.Style()

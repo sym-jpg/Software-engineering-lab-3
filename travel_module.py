@@ -4,8 +4,8 @@ class travel_module:
         return
         
     def get_travel_weather(self,start_city,end_city):
-        start=w_m.Weather_module("81b502387a57509a24643d6dfc9affb5","http://api.openweathermap.org/data/2.5/weather?")
-        end=w_m.Weather_module("81b502387a57509a24643d6dfc9affb5","http://api.openweathermap.org/data/2.5/weather?")
+        start=w_m.weather_module("81b502387a57509a24643d6dfc9affb5","http://api.openweathermap.org/data/2.5/weather?")
+        end=w_m.weather_module("81b502387a57509a24643d6dfc9affb5","http://api.openweathermap.org/data/2.5/weather?")
         start_temp,start_des=start.get_current_weather(start_city)
         end_temp,end_des=end.get_current_weather(end_city)
         return start_temp,end_temp,start_des,end_des
